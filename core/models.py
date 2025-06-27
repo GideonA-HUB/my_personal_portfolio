@@ -123,4 +123,22 @@ class Education(models.Model):
             return f"{self.start_date.strftime('%b %Y')} - Present"
         elif self.end_date:
             return f"{self.start_date.strftime('%b %Y')} - {self.end_date.strftime('%b %Y')}"
-        return self.start_date.strftime('%b %Y') 
+        return self.start_date.strftime('%b %Y')
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, blank=True, help_text="e.g., Client, Colleague, Mentor")
+    text = models.TextField()
+    photo = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    order = models.IntegerField(default=0, help_text="Order in which to display (lower numbers first)")
+    show_on_homepage = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', '-created_at']
+        verbose_name = "Review & Recommendation"
+        verbose_name_plural = "Reviews & Recommendations"
+
+    def __str__(self):
+        return f"{self.name} ({self.role})" if self.role else self.name 

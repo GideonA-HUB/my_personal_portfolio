@@ -139,9 +139,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.8;
     margin-bottom: 2rem;
-    opacity: 0.8;
+    opacity: 0.9;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    max-width: 600px;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.hero-description::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary-color), var(--warning-color));
+    border-radius: 2px;
 }
 
 .hero-buttons .btn {
@@ -158,22 +175,40 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-image img {
-    max-width: 400px;
+    max-width: 350px;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
     border: 4px solid rgba(255, 255, 255, 0.2);
-    box-shadow: var(--box-shadow);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .placeholder-image {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 450px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+    border-radius: 20px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    font-size: 8rem;
+    font-size: 6rem;
     color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.placeholder-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* Skills Section */
@@ -538,9 +573,8 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .hero-buttons .btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 1rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
     }
     
     .navbar-nav {
@@ -549,21 +583,66 @@ h1, h2, h3, h4, h5, h6 {
     
     .contact-form-card,
     .contact-info-card {
-        margin-bottom: 2rem;
+        padding: 1.5rem;
     }
     
     .skill-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        margin-bottom: 1rem;
     }
     
     .skill-name {
-        min-width: auto;
+        font-size: 0.9rem;
     }
     
     .skill-bar {
-        width: 100%;
+        height: 6px;
+    }
+    
+    /* Bio Responsive Design */
+    .hero-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        padding-left: 0.8rem;
+        max-width: 100%;
+    }
+    
+    .hero-description::before {
+        width: 2px;
+        top: 0.3rem;
+        bottom: 0.3rem;
+    }
+    
+    /* Hero Image Responsive Design */
+    .hero-image img {
+        max-width: 280px;
+        height: 360px;
+        border-radius: 15px;
+    }
+    
+    .placeholder-image {
+        width: 280px;
+        height: 360px;
+        border-radius: 15px;
+        font-size: 4rem;
+    }
+    
+    .about-hero .lead {
+        font-size: 1rem;
+        line-height: 1.7;
+        padding: 1rem 1.5rem;
+        margin: 0 1rem 2rem;
+    }
+    
+    .about-hero .lead::before {
+        font-size: 2rem;
+        top: -5px;
+        left: 0.5rem;
+    }
+    
+    .about-hero .lead::after {
+        font-size: 2rem;
+        bottom: -15px;
+        right: 0.5rem;
     }
 }
 
@@ -1668,4 +1747,263 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark-theme .faq-section .section-title {
     color: var(--text-color);
+}
+
+/* Reviews & Recommendations Carousel Styles */
+.testimonials-section {
+    background: var(--light-color);
+}
+
+.review-card {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.review-avatar {
+    position: relative;
+}
+
+.review-avatar img {
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.review-avatar img:hover {
+    transform: scale(1.05);
+}
+
+.avatar-placeholder {
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.avatar-placeholder:hover {
+    transform: scale(1.05);
+}
+
+.review-text {
+    position: relative;
+    padding: 0 1rem;
+}
+
+.review-text .fa-quote-left {
+    color: var(--primary-color);
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: 0;
+}
+
+.review-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.review-author h5 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.review-author p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Carousel Controls Styling */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: -25px;
+}
+
+.carousel-control-next {
+    right: -25px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-indicators {
+    bottom: -50px;
+}
+
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    border: none;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators button.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.empty-reviews {
+    opacity: 0.5;
+}
+
+/* Dark Theme Overrides for Carousel */
+.dark-theme .testimonials-section {
+    background: var(--dark-color);
+}
+
+.dark-theme .review-card {
+    background: var(--light-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .review-text p {
+    color: var(--text-color);
+}
+
+.dark-theme .carousel-control-prev,
+.dark-theme .carousel-control-next {
+    background: var(--primary-color);
+}
+
+.dark-theme .carousel-indicators button {
+    background-color: var(--secondary-color);
+}
+
+.dark-theme .carousel-indicators button.active {
+    background-color: var(--primary-color);
+}
+
+/* Responsive Design for Carousel */
+@media (max-width: 768px) {
+    .review-card {
+        padding: 2rem 1rem;
+        margin: 0 1rem;
+    }
+    
+    .review-text p {
+        font-size: 0.95rem;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-control-prev {
+        left: -20px;
+    }
+    
+    .carousel-control-next {
+        right: -20px;
+    }
+}
+
+/* Animation for carousel items */
+.carousel-item {
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About Page Bio Styling */
+.about-hero .lead {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    position: relative;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-color);
+    backdrop-filter: blur(10px);
+}
+
+.about-hero .lead::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 1rem;
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    font-family: serif;
+}
+
+.about-hero .lead::after {
+    content: '"';
+    position: absolute;
+    bottom: -20px;
+    right: 1rem;
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    font-family: serif;
+}
+
+/* Dark Theme Support for Bio Styling */
+.dark-theme .about-hero .lead {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--primary-color);
+}
+
+.dark-theme .about-hero .lead::before,
+.dark-theme .about-hero .lead::after {
+    color: var(--primary-color);
+}
+
+.dark-theme .hero-description::before {
+    background: linear-gradient(180deg, var(--primary-color), var(--warning-color));
 } 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Skill, Project, Contact, PersonalInfo, Experience, Education
+from .models import Skill, Project, Contact, PersonalInfo, Experience, Education, Testimonial
 
 
 @admin.register(Skill)
@@ -79,5 +79,18 @@ class EducationAdmin(admin.ModelAdmin):
         }),
         ('Academic Details', {
             'fields': ('description', 'gpa', 'relevant_courses')
+        }),
+    )
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ['name', 'role', 'show_on_homepage', 'order', 'created_at']
+    list_filter = ['show_on_homepage', 'created_at']
+    search_fields = ['name', 'role', 'text']
+    list_editable = ['order', 'show_on_homepage']
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'role', 'text', 'photo', 'order', 'show_on_homepage')
         }),
     ) 

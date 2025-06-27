@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Project, Skill, Contact, PersonalInfo, Experience, Education
+from .models import Project, Skill, Contact, PersonalInfo, Experience, Education, Testimonial
 from .forms import ContactForm
 
 
@@ -16,12 +16,14 @@ def home(request):
     skills = Skill.objects.all()
     featured_projects = Project.objects.filter(featured=True)[:3]
     all_projects = Project.objects.all()[:6]
+    testimonials = Testimonial.objects.filter(show_on_homepage=True)
     
     context = {
         'personal_info': personal_info,
         'skills': skills,
         'featured_projects': featured_projects,
         'all_projects': all_projects,
+        'testimonials': testimonials,
     }
     return render(request, 'core/home.html', context)
 
@@ -96,11 +98,13 @@ def about(request):
     skills = Skill.objects.all()
     experience = Experience.objects.all()
     education = Education.objects.all()
+    testimonials = Testimonial.objects.all()
     
     context = {
         'personal_info': personal_info,
         'skills': skills,
         'experience': experience,
         'education': education,
+        'testimonials': testimonials,
     }
     return render(request, 'core/about.html', context) 
