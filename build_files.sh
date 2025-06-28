@@ -2,9 +2,6 @@
 # exit on error
 set -o errexit
 
-# Install system dependencies for PostgreSQL
-apt-get update -qq && apt-get install -y postgresql-client
-
 # Install Python dependencies
 pip install -r requirements.txt
 
