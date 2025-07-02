@@ -14,10 +14,4 @@ pip install -r requirements.txt
 echo "Collecting static files..."
 python manage.py collectstatic --no-input
 
-echo "Running migrations..."
-python manage.py migrate --noinput
-
-echo "Setting up initial data..."
-python manage.py setup_initial_data
-
 echo "Build completed successfully!" 
