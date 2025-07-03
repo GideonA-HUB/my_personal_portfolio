@@ -18,11 +18,7 @@ def home(request):
     all_projects = Project.objects.all()[:6]
     testimonials = Testimonial.objects.filter(show_on_homepage=True)[:5]
     
-    # Debug: Print profile image info
-    if personal_info and personal_info.profile_image:
-        print(f"Profile image exists: {personal_info.profile_image}")
-        print(f"Profile image URL: {personal_info.profile_image.url}")
-        print(f"Profile image path: {personal_info.profile_image.path}")
+
     
     context = {
         'personal_info': personal_info,
