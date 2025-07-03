@@ -14,8 +14,4 @@ pip install -r requirements.txt
 echo "Collecting static files..."
 python manage.py collectstatic --no-input
 
-echo "Running database migrations..."
-python manage.py makemigrations --no-input
-python manage.py migrate --no-input
-
 echo "Build completed successfully!" 
