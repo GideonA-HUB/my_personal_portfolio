@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -16,7 +16,13 @@ def home(request):
     skills = Skill.objects.all()
     featured_projects = Project.objects.filter(featured=True)[:3]
     all_projects = Project.objects.all()[:6]
-    testimonials = Testimonial.objects.filter(show_on_homepage=True)
+    testimonials = Testimonial.objects.filter(show_on_homepage=True)[:5]
+    
+    # Debug: Print profile image info
+    if personal_info and personal_info.profile_image:
+        print(f"Profile image exists: {personal_info.profile_image}")
+        print(f"Profile image URL: {personal_info.profile_image.url}")
+        print(f"Profile image path: {personal_info.profile_image.path}")
     
     context = {
         'personal_info': personal_info,
