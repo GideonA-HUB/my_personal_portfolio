@@ -115,7 +115,7 @@ USE_CLOUDINARY = all([
 ])
 
 # Media files - Use Cloudinary for production
-if not DEBUG and USE_CLOUDINARY:
+if USE_CLOUDINARY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     MEDIA_URL = '/media/'
 else:
