@@ -107,16 +107,22 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
 }
 
+# Only use Cloudinary if credentials are provided
+USE_CLOUDINARY = all([
+    config('CLOUDINARY_CLOUD_NAME', default=''),
+    config('CLOUDINARY_API_KEY', default=''),
+    config('CLOUDINARY_API_SECRET', default='')
+])
+
 # Media files - Use Cloudinary for production
-if not DEBUG:
+if not DEBUG and USE_CLOUDINARY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     MEDIA_URL = '/media/'
 else:
-    # Use local storage for development
+    # Use local storage for development or if Cloudinary not configured
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
     # Create media directory if it doesn't exist
-    import os
     os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 # Default primary key field type
