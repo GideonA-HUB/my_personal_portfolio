@@ -1,179 +1,110 @@
-# Portfolio Deployment Guide
+# Railway Deployment Guide
 
-This guide will help you deploy your Django portfolio website to various platforms.
+## Quick Fix for 500 Error
 
-## 🚀 Quick Deploy Options
+If you're getting a 500 error after upgrading to Railway's hobby plan, follow these steps:
 
-### Option 1: Railway (Recommended - Free & Easy)
+### 1. Set Environment Variables
 
-1. **Create Railway Account**
-   - Go to [railway.app](https://railway.app)
-   - Sign up with GitHub
+In your Railway dashboard, go to your project settings and add these environment variables:
 
-2. **Deploy from GitHub**
-   - Click "New Project"
-   - Select "Deploy from GitHub repo"
-   - Choose your portfolio repository
-
-3. **Configure Environment Variables**
-   - Go to your project settings
-   - Add these environment variables:
-   ```
-   SECRET_KEY=your-generated-secret-key
-   DEBUG=False
-   ALLOWED_HOSTS=your-app-name.railway.app
-   ```
-
-4. **Deploy**
-   - Railway will automatically detect Django and deploy
-   - Your site will be live at `https://your-app-name.railway.app`
-
-### Option 2: Render (Great Alternative)
-
-1. **Create Render Account**
-   - Go to [render.com](https://render.com)
-   - Sign up with GitHub
-
-2. **Create New Web Service**
-   - Click "New +" → "Web Service"
-   - Connect your GitHub repository
-
-3. **Configure Service**
-   - **Name**: Your portfolio name
-   - **Environment**: Python 3
-   - **Build Command**: `pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate`
-   - **Start Command**: `gunicorn portfolio.wsgi:application`
-
-4. **Environment Variables**
-   ```
-   SECRET_KEY=your-generated-secret-key
-   DEBUG=False
-   ALLOWED_HOSTS=your-app-name.onrender.com
-   ```
-
-### Option 3: Heroku
-
-1. **Install Heroku CLI**
-   ```bash
-   # Windows
-   Download from: https://devcenter.heroku.com/articles/heroku-cli
-   
-   # Mac
-   brew tap heroku/brew && brew install heroku
-   ```
-
-2. **Login and Create App**
-   ```bash
-   heroku login
-   heroku create your-portfolio-name
-   ```
-
-3. **Set Environment Variables**
-   ```bash
-   heroku config:set SECRET_KEY=your-generated-secret-key
-   heroku config:set DEBUG=False
-   heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com
-   ```
-
-4. **Deploy**
-   ```bash
-   git add .
-   git commit -m "Deploy to Heroku"
-   git push heroku main
-   heroku run python manage.py migrate
-   ```
-
-## 🔧 Pre-Deployment Checklist
-
-### 1. Generate Secret Key
-```python
-# Run this in Python shell
-from django.core.management.utils import get_random_secret_key
-print(get_random_secret_key())
+```
+SECRET_KEY=your-secret-key-here
+DEBUG=False
+ALLOWED_HOSTS=gideon-portfolio.up.railway.app
+DATABASE_URL=your-postgresql-url-from-railway
 ```
 
-### 2. Collect Static Files
-```bash
-python manage.py collectstatic --no-input
+### 2. Database Setup
+
+Railway provides a PostgreSQL database. Make sure to:
+- Copy the `DATABASE_URL` from Railway's database tab
+- Set it as an environment variable
+- The build script will automatically run migrations
+
+### 3. Cloudinary Setup (Optional)
+
+If you want to use Cloudinary for image storage, add these variables:
+
+```
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 ```
 
-### 3. Run Migrations
-```bash
-python manage.py migrate
-```
+### 4. Redeploy
 
-### 4. Create Superuser (if needed)
-```bash
-python manage.py createsuperuser
-```
+After setting the environment variables:
+1. Go to Railway dashboard
+2. Click "Deploy" to trigger a new deployment
+3. The build script will automatically:
+   - Install dependencies
+   - Collect static files
+   - Run database migrations
+   - Set up initial data
 
-## 📁 Important Files Created
-
-- `Procfile` - Tells deployment platforms how to run your app
-- `runtime.txt` - Specifies Python version
-- `build_files.sh` - Build script for some platforms
-- `env.example` - Example environment variables
-- Updated `settings.py` - Production-ready settings
-- Updated `requirements.txt` - All necessary dependencies
-
-## 🔒 Security Notes
-
-1. **Never commit your `.env` file** with real secrets
-2. **Use environment variables** for sensitive data
-3. **Generate a new SECRET_KEY** for production
-4. **Set DEBUG=False** in production
-
-## 🌐 Custom Domain (Optional)
-
-After deployment, you can add a custom domain:
-
-1. **Buy a domain** (Namecheap, GoDaddy, etc.)
-2. **Configure DNS** to point to your deployment URL
-3. **Update ALLOWED_HOSTS** with your domain
-4. **Add SSL certificate** (most platforms do this automatically)
-
-## 📊 Monitoring & Maintenance
+## Troubleshooting
 
 ### Check Logs
-- Railway: Dashboard → Deployments → View logs
-- Render: Dashboard → Your service → Logs
-- Heroku: `heroku logs --tail`
+1. Go to Railway dashboard
+2. Click on your deployment
+3. Check the logs for specific error messages
 
-### Update Your Site
-1. Make changes locally
-2. Test thoroughly
-3. Commit and push to GitHub
-4. Platform will auto-deploy (or trigger manual deploy)
+### Common Issues
 
-## 🆘 Troubleshooting
+1. **Database Connection Error**
+   - Ensure `DATABASE_URL` is set correctly
+   - Check if the database is provisioned in Railway
 
-### Common Issues:
+2. **Static Files Error**
+   - The build script automatically collects static files
+   - Check if `STATIC_ROOT` is set correctly
 
-1. **Static files not loading**
-   - Run `python manage.py collectstatic`
-   - Check STATIC_ROOT and STATIC_URL settings
+3. **Missing Environment Variables**
+   - Ensure all required variables are set
+   - Double-check variable names and values
 
-2. **Database errors**
-   - Run `python manage.py migrate`
-   - Check database configuration
+4. **Migration Errors**
+   - The build script runs migrations automatically
+   - Check logs for specific migration errors
 
-3. **500 errors**
-   - Check logs for specific error messages
-   - Verify environment variables are set correctly
+### Manual Commands
 
-4. **Media files not working**
-   - Consider using cloud storage (AWS S3, Cloudinary) for production
+If you need to run commands manually, you can use Railway's shell:
 
-## 🎉 Success!
+```bash
+# Connect to Railway shell
+railway shell
 
-Once deployed, your portfolio will be live and accessible worldwide!
+# Run migrations
+python manage.py migrate
 
-### Next Steps:
-1. **Test all functionality** on the live site
-2. **Add your content** through the admin panel
-3. **Share your portfolio** with potential employers/clients
-4. **Set up monitoring** to track site performance
+# Set up initial data
+python manage.py setup_initial_data
 
----
+# Create superuser
+python manage.py createsuperuser
 
-**Need help?** Check the platform's documentation or reach out to their support teams. 
+# Collect static files
+python manage.py collectstatic --noinput
+```
+
+## Environment Variables Reference
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SECRET_KEY` | Yes | Django secret key |
+| `DEBUG` | Yes | Set to `False` for production |
+| `ALLOWED_HOSTS` | Yes | Your Railway domain |
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `CLOUDINARY_CLOUD_NAME` | No | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | No | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | No | Cloudinary API secret |
+
+## Support
+
+If you're still experiencing issues:
+1. Check Railway's status page
+2. Review the deployment logs
+3. Ensure all environment variables are set correctly
+4. Try redeploying the application 

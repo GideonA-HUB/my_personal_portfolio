@@ -12,11 +12,34 @@ def home(request):
         personal_info = PersonalInfo.objects.first()
     except PersonalInfo.DoesNotExist:
         personal_info = None
+    except Exception as e:
+        # Log the error but don't crash the page
+        print(f"Error loading personal info: {e}")
+        personal_info = None
     
-    skills = Skill.objects.all()
-    featured_projects = Project.objects.filter(featured=True)[:3]
-    all_projects = Project.objects.all()[:6]
-    testimonials = Testimonial.objects.filter(show_on_homepage=True)[:5]
+    try:
+        skills = Skill.objects.all()
+    except Exception as e:
+        print(f"Error loading skills: {e}")
+        skills = []
+    
+    try:
+        featured_projects = Project.objects.filter(featured=True)[:3]
+    except Exception as e:
+        print(f"Error loading featured projects: {e}")
+        featured_projects = []
+    
+    try:
+        all_projects = Project.objects.all()[:6]
+    except Exception as e:
+        print(f"Error loading all projects: {e}")
+        all_projects = []
+    
+    try:
+        testimonials = Testimonial.objects.filter(show_on_homepage=True)[:5]
+    except Exception as e:
+        print(f"Error loading testimonials: {e}")
+        testimonials = []
     
 
     

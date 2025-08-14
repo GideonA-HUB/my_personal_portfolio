@@ -1,20 +1,18 @@
-#!/usr/bin/env bash
-# exit on error
-set -o errexit
+#!/bin/bash
+# Build script for Railway deployment
 
 echo "Starting build process..."
 
-# Install Python dependencies
-echo "Upgrading pip..."
-pip install --upgrade pip
-
-echo "Installing requirements..."
+# Install dependencies
 pip install -r requirements.txt
 
-echo "Collecting static files..."
-python manage.py collectstatic --no-input
+# Collect static files
+python manage.py collectstatic --noinput
 
-echo "Creating media directories..."
-mkdir -p media/profile media/projects media/testimonials
+# Run database migrations
+python manage.py migrate
+
+# Set up initial data
+python manage.py setup_initial_data
 
 echo "Build completed successfully!" 

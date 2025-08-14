@@ -18,6 +18,14 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='gideon-portfolio.up.railway.app').split(',')
 
+# Add Railway's default domain to allowed hosts
+ALLOWED_HOSTS.extend([
+    'gideon-portfolio.up.railway.app',
+    '*.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+])
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,6 +78,15 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+
+# Fallback to SQLite if no DATABASE_URL is provided
+if not config('DATABASE_URL', default=''):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -149,4 +166,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     'https://gideon-portfolio.up.railway.app',
     'https://*.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ] 
