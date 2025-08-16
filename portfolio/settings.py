@@ -22,6 +22,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='gideon-portfolio.up.railway.app
 ALLOWED_HOSTS.extend([
     'gideon-portfolio.up.railway.app',
     '*.up.railway.app',
+    'healthcheck.railway.app',
+    '*.healthcheck.railway.app',
     'localhost',
     '127.0.0.1',
 ])
@@ -169,6 +171,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     'https://gideon-portfolio.up.railway.app',
     'https://*.up.railway.app',
+    'https://healthcheck.railway.app',
+    'https://*.healthcheck.railway.app',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ] 
