@@ -70,17 +70,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
-# Database
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# Database Configuration
+DATABASE_URL = config('DATABASE_URL', default='')
 
-# Fallback to SQLite if no DATABASE_URL is provided
-if not config('DATABASE_URL', default=''):
+if DATABASE_URL:
+    # Use PostgreSQL if DATABASE_URL is provided
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Fallback to SQLite for development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

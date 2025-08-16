@@ -15,6 +15,9 @@ ALLOWED_HOSTS=gideon-portfolio.up.railway.app
 DATABASE_URL=your-postgresql-url-from-railway
 ```
 
+**Important:** Make sure to copy the exact `DATABASE_URL` from Railway's database tab. It should look like:
+`postgresql://username:password@host:port/database_name`
+
 ### 2. Database Setup
 
 Railway provides a PostgreSQL database. Make sure to:
@@ -75,6 +78,9 @@ If you need to run commands manually, you can use Railway's shell:
 ```bash
 # Connect to Railway shell
 railway shell
+
+# Check database connection
+python manage.py check_db
 
 # Run migrations
 python manage.py migrate
